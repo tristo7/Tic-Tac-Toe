@@ -1,18 +1,26 @@
 package edu.jsu.mcis;
 
+import java.util.Scanner;
+
 public class TicTacToe {
 	private String[][] ticTacToeGameBoardRowByColumn = new String[3][3];
 	private boolean isXTurn = true;
-	private boolean invalidMarkDetectedFlag = false;
-	public enum GameState{TIE, X, O, NOTDONE};
+	private static boolean invalidMarkDetectedFlag = false;
+	protected enum GameState{TIE, X, O, NOTDONE};
 	
 	public TicTacToe(){
 		for(int row = 0;row<3;row++){
 			for(int col = 0;col<3;col++){
 				ticTacToeGameBoardRowByColumn[row][col] = "-";
-				System.out.println(ticTacToeGameBoardRowByColumn[row][col]);
 			}
 		}
+	}
+	
+	public String getWhoseTurnItIs(){
+		if(isXTurn)
+			return "X";
+		else
+			return "O";
 	}
 	
 	public String getGameBoard(){
@@ -55,12 +63,12 @@ public class TicTacToe {
 		if(dashCounter == 0)
 			result = GameState.TIE;
 		
-		if(	   (ticTacToeGameBoardRowByColumn[0][0] == "X" && ticTacToeGameBoardRowByColumn[2][2] == "X")
-			 ||(ticTacToeGameBoardRowByColumn[0][2] == "X" && ticTacToeGameBoardRowByColumn[2][0] == "X")
+		if(	   ((ticTacToeGameBoardRowByColumn[0][0] == "X" && ticTacToeGameBoardRowByColumn[2][2] == "X")
+			 ||(ticTacToeGameBoardRowByColumn[0][2] == "X" && ticTacToeGameBoardRowByColumn[2][0] == "X"))
 			 && ticTacToeGameBoardRowByColumn[1][1] == "X"){
 				result = GameState.X;
-		}else if((ticTacToeGameBoardRowByColumn[0][0] == "O" && ticTacToeGameBoardRowByColumn[2][2] == "O")
-			   ||(ticTacToeGameBoardRowByColumn[0][2] == "O" && ticTacToeGameBoardRowByColumn[2][0] == "O")
+		}else if(((ticTacToeGameBoardRowByColumn[0][0] == "O" && ticTacToeGameBoardRowByColumn[2][2] == "O")
+			   ||(ticTacToeGameBoardRowByColumn[0][2] == "O" && ticTacToeGameBoardRowByColumn[2][0] == "O"))
 			   && ticTacToeGameBoardRowByColumn[1][1] == "O"){
 				result = GameState.O;
 		}
@@ -91,6 +99,49 @@ public class TicTacToe {
 	}
 	
 	public static void main(String[] args) {
+			TicTacToe game = new TicTacToe();
+			Scanner input = new Scanner(System.in);
+			int chosenRow, chosenColumn, turnNum;
+			turnNum = 1;
+			boolean isFirstOrSecondTurn = true;
+		do{
+			System.out.print("\033[H\033[2J"); //Clear the console
+			System.out.println(game.getGameBoard()+"\n");
+			System.out.println(game.getWhoseTurnItIs()+"'s turn. Please enter a row and column.\n");
+			if(isFirstOrSecondTurn){
+				System.out.println("Example: \"1 2\" would mark a(n) "+game.getWhoseTurnItIs()+" in the first row second column.\n");
+				turnNum++;
+				if(turnNum>2)
+					isFirstOrSecondTurn = false;
+			}
+			chosenRow = input.nextInt();
+			chosenColumn = input.nextInt();
+			game.markLocationByRowAndColumn(chosenRow-1,chosenColumn-1);
+			System.out.println();
+			
+			
+			while(invalidMarkDetectedFlag){
+				System.out.println("That location is already occupied. Please choose another.");
+				chosenRow = input.nextInt();
+				chosenColumn = input.nextInt();
+				game.markLocationByRowAndColumn(chosenRow-1,chosenColumn-1);
+			}
+			
+		}while(game.getCurrentGameState() == GameState.NOTDONE);
+		System.out.print("\033[H\033[2J"); //Clear the console
+		System.out.println(game.getGameBoard()+"\n");
 		
+		
+		switch(game.getCurrentGameState()){
+			case X:
+				System.out.println("X won!");
+				break;
+			case O:
+				System.out.println("O won!");
+				break;
+			case TIE:
+				System.out.println("Tie!");
+				break;
+		}	
 	}
 }
