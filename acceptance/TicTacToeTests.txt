@@ -3,11 +3,13 @@ Library           TicTacToeKeywords
 
 
 *** Keywords ***
-Check Location   [Arguments]   ${row}    ${col}    ${mark}
+Check Location   
+    [Arguments]   ${row}    ${col}    ${mark}
     ${m}=   Get Mark    ${row}    ${col}
 	Should Be Equal    ${m}    ${mark}    
 
-Winner Should Be   [Arguments]       ${mark}
+Winner Should Be   
+    [Arguments]       ${mark}
     ${m}=   Get Winner
 	Should Be Equal    ${m}    ${mark}    
 	

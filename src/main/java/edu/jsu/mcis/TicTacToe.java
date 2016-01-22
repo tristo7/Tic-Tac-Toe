@@ -6,7 +6,12 @@ public class TicTacToe {
 	private String[][] ticTacToeGameBoardRowByColumn = new String[3][3];
 	private boolean isXTurn = true;
 	private static boolean invalidMarkDetectedFlag = false;
-	protected enum GameState{TIE, X, O, NOTDONE};
+	
+	public enum GameState{
+		TIE, 
+		X, 
+		O, 
+		NOTDONE};
 	
 	public TicTacToe(){
 		for(int row = 0;row<3;row++){
@@ -34,17 +39,25 @@ public class TicTacToe {
 		return board;
 	}
 	
+	public String getMarkByRowAndColumn(int row, int col){
+		return ticTacToeGameBoardRowByColumn[row][col];
+	}
+	
 	public void markLocationByRowAndColumn(int row, int col){
 		invalidMarkDetectedFlag = false;
-		if(ticTacToeGameBoardRowByColumn[row][col] != "-"){
+		if(row >2 || row <0 || col >2 || col <0)
 			invalidMarkDetectedFlag = true;
-		} else {
-			if(isXTurn){
-				ticTacToeGameBoardRowByColumn[row][col] = "X";
-				isXTurn = false;
-			}else{
-				ticTacToeGameBoardRowByColumn[row][col] = "O";
-				isXTurn = true;
+		else{
+			if(ticTacToeGameBoardRowByColumn[row][col] != "-"){
+				invalidMarkDetectedFlag = true;
+			} else {
+				if(isXTurn){
+					ticTacToeGameBoardRowByColumn[row][col] = "X";
+					isXTurn = false;
+				}else{
+					ticTacToeGameBoardRowByColumn[row][col] = "O";
+					isXTurn = true;
+				}
 			}
 		}
 	}
@@ -98,7 +111,7 @@ public class TicTacToe {
 		return result;
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args){
 			TicTacToe game = new TicTacToe();
 			Scanner input = new Scanner(System.in);
 			int chosenRow, chosenColumn, turnNum;

@@ -94,48 +94,6 @@ public class TicTacToeTest {
 	}
 	
 	@Test
-	public void testGameIsWonByOHorizontallyAcrossTopRow() {
-		t.markLocationByRowAndColumn(1,2);
-		t.markLocationByRowAndColumn(0,0);
-		t.markLocationByRowAndColumn(1,0);
-		t.markLocationByRowAndColumn(0,1);
-		t.markLocationByRowAndColumn(2,2);
-		t.markLocationByRowAndColumn(0,2);
-		assertEquals(TicTacToe.GameState.O, t.getCurrentGameState());
-	}
-	
-	@Test
-	public void testGameIsWonByXHorizontallyAcrossMiddleRow() {
-		t.markLocationByRowAndColumn(1,0);
-		t.markLocationByRowAndColumn(2,0);
-		t.markLocationByRowAndColumn(1,1);
-		t.markLocationByRowAndColumn(2,1);
-		t.markLocationByRowAndColumn(1,2);
-		assertEquals(TicTacToe.GameState.X, t.getCurrentGameState());
-	}
-	
-	@Test
-	public void testGameIsWonByOHorizontallyAcrossMiddleRow() {
-		t.markLocationByRowAndColumn(0,0);
-		t.markLocationByRowAndColumn(1,0);
-		t.markLocationByRowAndColumn(2,1);
-		t.markLocationByRowAndColumn(1,1);
-		t.markLocationByRowAndColumn(0,2);
-		t.markLocationByRowAndColumn(1,2);
-		assertEquals(TicTacToe.GameState.O, t.getCurrentGameState());
-	}
-	
-	@Test
-	public void testGameIsWonByXHorizontallyAcrossBottomRow() {
-		t.markLocationByRowAndColumn(2,0);
-		t.markLocationByRowAndColumn(1,1);
-		t.markLocationByRowAndColumn(2,1);
-		t.markLocationByRowAndColumn(1,2);
-		t.markLocationByRowAndColumn(2,2);
-		assertEquals(TicTacToe.GameState.X, t.getCurrentGameState());
-	}
-	
-	@Test
 	public void testGameIsWonByOHorizontallyAcrossBottomRow() {
 		t.markLocationByRowAndColumn(0,0);
 		t.markLocationByRowAndColumn(2,0);
@@ -157,48 +115,6 @@ public class TicTacToeTest {
 	}
 	
 	@Test
-	public void testGameIsWonByXVerticallyMiddleColumn(){
-		t.markLocationByRowAndColumn(0,1);
-		t.markLocationByRowAndColumn(2,2);
-		t.markLocationByRowAndColumn(1,1);
-		t.markLocationByRowAndColumn(2,0);
-		t.markLocationByRowAndColumn(2,1);
-		assertEquals(TicTacToe.GameState.X, t.getCurrentGameState());
-	}
-	
-	@Test
-	public void testGameIsWonByXVerticallyRightColumn(){
-		t.markLocationByRowAndColumn(0,2);
-		t.markLocationByRowAndColumn(1,0);
-		t.markLocationByRowAndColumn(1,2);
-		t.markLocationByRowAndColumn(1,1);
-		t.markLocationByRowAndColumn(2,2);
-		assertEquals(TicTacToe.GameState.X, t.getCurrentGameState());
-	}
-	
-	@Test
-	public void testGameIsWonByOVerticallyLeftColumn(){
-		t.markLocationByRowAndColumn(0,1);
-		t.markLocationByRowAndColumn(0,0);
-		t.markLocationByRowAndColumn(2,2);
-		t.markLocationByRowAndColumn(1,0);
-		t.markLocationByRowAndColumn(2,1);
-		t.markLocationByRowAndColumn(2,0);
-		assertEquals(TicTacToe.GameState.O, t.getCurrentGameState());
-	}
-	
-	@Test
-	public void testGameIsWonByOVerticallyMiddleColumn(){
-		t.markLocationByRowAndColumn(0,0); 
-		t.markLocationByRowAndColumn(0,1); 
-		t.markLocationByRowAndColumn(2,2); 
-		t.markLocationByRowAndColumn(1,1); 
-		t.markLocationByRowAndColumn(2,0);
-		t.markLocationByRowAndColumn(2,1);
-		assertEquals(TicTacToe.GameState.O, t.getCurrentGameState());
-	}
-	
-	@Test
 	public void testGameIsWonByOVerticallyRightColumn(){
 		t.markLocationByRowAndColumn(0,0);
 		t.markLocationByRowAndColumn(0,2);
@@ -207,16 +123,6 @@ public class TicTacToeTest {
 		t.markLocationByRowAndColumn(1,1);
 		t.markLocationByRowAndColumn(2,2);
 		assertEquals(TicTacToe.GameState.O, t.getCurrentGameState());
-	}
-	
-	@Test
-	public void testGameIsWonByXDiagonallyLeftToRight() {
-		t.markLocationByRowAndColumn(0,0);
-		t.markLocationByRowAndColumn(0,1);
-		t.markLocationByRowAndColumn(1,1);
-		t.markLocationByRowAndColumn(0,2);
-		t.markLocationByRowAndColumn(2,2);
-		assertEquals(TicTacToe.GameState.X, t.getCurrentGameState());
 	}
 	
 	@Test
@@ -241,17 +147,6 @@ public class TicTacToeTest {
 	}
 	
 	@Test
-	public void testGameIsWonByODiagonallyRightToLeft() {
-		t.markLocationByRowAndColumn(0,0);
-		t.markLocationByRowAndColumn(0,2);
-		t.markLocationByRowAndColumn(0,1);
-		t.markLocationByRowAndColumn(1,1);
-		t.markLocationByRowAndColumn(1,0);
-		t.markLocationByRowAndColumn(2,0);
-		assertEquals(TicTacToe.GameState.O, t.getCurrentGameState());
-	}
-	
-	@Test
 	public void testGameIsOverByTieIfAllLocationsAreFilled() {
 		t.markLocationByRowAndColumn(0,0);
 		t.markLocationByRowAndColumn(0,1);
@@ -264,4 +159,25 @@ public class TicTacToeTest {
 		t.markLocationByRowAndColumn(2,1);
 		assertEquals(TicTacToe.GameState.TIE, t.getCurrentGameState());
 	}	
+
+	@Test
+	public void testMarkOutsideOfIndexKeepsTurn(){
+		t.markLocationByRowAndColumn(4,4);
+		t.markLocationByRowAndColumn(-2,-3);
+		assertEquals("X",t.getWhoseTurnItIs());
+	}
+	
+	@Test
+	public void testGetMarkByRowAndColumn(){
+		t.markLocationByRowAndColumn(0,0);
+		assertEquals("X",t.getMarkByRowAndColumn(0,0));
+		t.markLocationByRowAndColumn(1,1);
+		assertEquals("O",t.getMarkByRowAndColumn(1,1));
+		t.markLocationByRowAndColumn(2,2);
+		assertEquals("X",t.getMarkByRowAndColumn(2,2));
+		assertEquals("-",t.getMarkByRowAndColumn(0,2));
+		
+	}
 }
+
+	
